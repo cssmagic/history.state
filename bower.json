@@ -1,0 +1,34 @@
+{
+  "name": "history.state",
+  "homepage": "https://github.com/cssmagic/history.state",
+  "authors": [
+    "cssmagic <cssmagic.cn@gmail.com>"
+  ],
+  "description": "{description}",
+  "main": "src/history.state.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "html5",
+    "history",
+    "state"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "**.sh",
+    "**.min.js",
+    "package.json",
+    "node_modules",
+    "bower_components",
+    "test",
+    "doc"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "mocha.css": "0.1.0",
+    "mocha": "1.*",
+    "chai": "1.*"
+  }
+}
