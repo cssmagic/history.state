@@ -17,7 +17,7 @@
 void function () {
 	'use strict'
 	var key = location.href.split('?key=')[1] || ''
-	parent._.dom.$win.trigger('sandbox-ready', [key])
+	parent.mocha.triggerSandboxTest(key)
 }()
 </script>
 </body>
