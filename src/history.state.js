@@ -14,7 +14,21 @@ var historyState = function (window) {
 
 	// util
 	function _bind() {
-
+		window.addEventListener('popstate', function (ev) {
+			history['state'] = ev.state
+		})
+	}
+	function _injectHistoryAPI() {
+		var oldPushState = history.pushState
+		var oldReplaceState = history.replaceState
+		history.pushState = function () {
+			oldPushState.apply(this, arguments)
+			history['state'] = arguments[0]
+		}
+		history.replaceState = function () {
+			oldReplaceState.apply(this, arguments)
+			history['state'] = arguments[0]
+		}
 	}
 
 	function _hasHistoryAPI() {
@@ -28,7 +42,17 @@ var historyState = function (window) {
 
 	// fn
 	function polyfill() {
-		_bind()
+		if (_hasHistoryAPI()) {
+			if (!_hasHistoryState()) {
+				history['state'] = null
+				_bind()
+				_injectHistoryAPI()
+			}
+		} else {
+			var msg = '[history.state] This browser doesn\'t support History APIs. Cannot fulfill polyfill.'
+			var log = window.console && (console.error || console.warn || console.log)
+			if (typeof log === 'function') log(msg)
+		}
 	}
 	function isSupported() {
 		return _hasHistoryAPI() && _hasHistoryState()
