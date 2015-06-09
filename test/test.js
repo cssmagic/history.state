@@ -1,9 +1,13 @@
 void function () {
-
 	// check env
 	if (typeof window === 'undefined') {
 		console.error('[history.state] Open test.html in browsers to run tests!')
 		return
+	}
+
+	// util
+	function _getRandomStr() {
+		return (Date.now() + Math.random()).toString(36)
 	}
 
 	// sandbox
@@ -24,25 +28,25 @@ void function () {
 			})
 			.appendTo(document.body)
 	}
-
 	function _getSandboxWindow() {
 		return $iframeSandbox[0].contentWindow
 	}
 	function _registerSandboxTest(fn) {
-		var key = (Date.now() + Math.random()).toString(36)
-		$iframeSandbox.attr('src', src + '?key=' + key)
-		registeredTests[key] = fn
+		var testId = _getRandomStr()
+		$iframeSandbox.attr('src', src + '?testId=' + testId)
+		registeredTests[testId] = fn
 	}
 	function _listenSandboxReady() {
-		_.dom.$body.on('sandbox-ready', function (ev, key) {
-			var fn = registeredTests[key]
+		_.dom.$body.on('sandbox-ready', function (ev, testId) {
+			var fn = registeredTests[testId]
 			if (_.isFunction(fn)) fn()
 		})
 	}
 
 	// bridge for sandbox
-	mocha.triggerSandboxTest = function (key) {
-		_.dom.$body.trigger('sandbox-ready', [key])
+	// shouldn't run tests in sandbox scope, so use event to trigger tests in host scope
+	mocha.runRegisteredTest = function (testId) {
+		_.dom.$body.trigger('sandbox-ready', [testId])
 	}
 
 	describe('Util', function () {
@@ -78,8 +82,63 @@ void function () {
 			_listenSandboxReady()
 		})
 		describe('historyState.polyfill()', function () {
-			it('does basic functionality', function () {
-				//...
+			it('fulfills polyfill - updating `history.state` after push state', function (done) {
+				if (!historyState.isSupported() && historyState.__hasHistoryAPI()) {
+					_registerSandboxTest(function () {
+						var sandboxWindow = _getSandboxWindow()
+						sandboxWindow.historyState.polyfill()
+						var key = _getRandomStr()
+						var state = {
+							testKey: key
+						}
+						sandboxWindow.history.pushState(state, '')
+						var keyInState = sandboxWindow.history.state.testKey || ''
+						expect(keyInState).to.equal(key)
+						done()
+					})
+				} else {
+					done()
+				}
+			})
+			it('fulfills polyfill - updating `history.state` after replace state', function (done) {
+				if (!historyState.isSupported() && historyState.__hasHistoryAPI()) {
+					_registerSandboxTest(function () {
+						var sandboxWindow = _getSandboxWindow()
+						sandboxWindow.historyState.polyfill()
+						var key = _getRandomStr()
+						var state = {
+							testKey: key
+						}
+						sandboxWindow.history.replaceState(state, '')
+						var keyInState = sandboxWindow.history.state.testKey || ''
+						expect(keyInState).to.equal(key)
+						done()
+					})
+				} else {
+					done()
+				}
+			})
+			it('fulfills polyfill - updating `history.state` after `popstate` event', function (done) {
+				if (!historyState.isSupported() && historyState.__hasHistoryAPI()) {
+					_registerSandboxTest(function () {
+						var sandboxWindow = _getSandboxWindow()
+						sandboxWindow.historyState.polyfill()
+						var key = _getRandomStr()
+						var state = {
+							testKey: key
+						}
+						sandboxWindow.history.replaceState(state, '')
+						sandboxWindow.history.pushState(null, '')
+						sandboxWindow.history.back()
+						setTimeout(function () {
+							var keyInState = sandboxWindow.history.state.testKey || ''
+							expect(keyInState).to.equal(key)
+							done()
+						}, 100)
+					})
+				} else {
+					done()
+				}
 			})
 		})
 		describe('historyState.isSupported()', function () {

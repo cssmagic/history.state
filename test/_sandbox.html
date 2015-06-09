@@ -16,8 +16,8 @@
 <script>
 void function () {
 	'use strict'
-	var key = location.href.split('?key=')[1] || ''
-	parent.mocha.triggerSandboxTest(key)
+	var testId = location.href.split('?testId=')[1] || ''
+	parent.mocha.runRegisteredTest(testId)
 }()
 </script>
 </body>
