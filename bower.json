@@ -27,6 +27,8 @@
   ],
   "dependencies": {},
   "devDependencies": {
+    "zepto.js": "1.*",
+    "underscore.ext": "0.3",
     "mocha.css": "0.1.0",
     "mocha": "1.*",
     "chai": "1.*"

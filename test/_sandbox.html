@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Testing Sandbox - UT - history.state</title>
+</head>
+
+<body>
+<h1>Testing Sandbox</h1>
+<!-- deps -->
+<script src="../bower_components/underscore/underscore.js"></script>
+<script src="../bower_components/zepto.js/dist/zepto.js"></script>
+<script src="../bower_components/underscore.ext/dist/underscore.ext.js"></script>
+<!-- source code -->
+<script src="../src/history.state.js"></script>
+<script>
+void function () {
+	'use strict'
+	var key = location.href.split('?key=')[1] || ''
+	parent._.dom.$win.trigger('sandbox-ready', [key])
+}()
+</script>
+</body>
+</html>
