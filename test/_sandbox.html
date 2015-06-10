@@ -7,17 +7,16 @@
 
 <body>
 <h1>Testing Sandbox</h1>
-<!-- deps -->
-<script src="../bower_components/underscore/underscore.js"></script>
-<script src="../bower_components/zepto.js/dist/zepto.js"></script>
-<script src="../bower_components/underscore.ext/dist/underscore.ext.js"></script>
 <!-- source code -->
 <script src="../src/history.state.js"></script>
 <script>
 void function () {
 	'use strict'
 	var testId = location.href.split('?testId=')[1] || ''
-	parent.mocha.runRegisteredTest(testId)
+	if (testId) {
+		var data = {testId: testId}
+		parent.postMessage(JSON.stringify(data), '*')
+	}
 }()
 </script>
 </body>
