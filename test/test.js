@@ -14,7 +14,6 @@ void function () {
 	var registeredTests = {}
 	var src = '_sandbox.html'
 	var $iframeSandbox
-
 	function _initSandbox() {
 		$iframeSandbox = $('<iframe></iframe>')
 			.attr({
@@ -36,17 +35,15 @@ void function () {
 		$iframeSandbox.attr('src', src + '?testId=' + testId)
 		registeredTests[testId] = fn
 	}
-	function _listenSandboxReady() {
-		_.dom.$body.on('sandbox-ready', function (ev, testId) {
-			var fn = registeredTests[testId]
-			if (_.isFunction(fn)) fn()
-		})
-	}
 
 	// bridge for sandbox
-	// shouldn't run tests in sandbox scope, so use event to trigger tests in host scope
-	mocha.runRegisteredTest = function (testId) {
-		_.dom.$body.trigger('sandbox-ready', [testId])
+	// shouldn't run tests in sandbox scope, so post message to tell host scope to run tests
+	function _listenSandboxMessage() {
+		window.addEventListener('message', function (ev) {
+			var data = JSON.parse(ev.data || '') || {}
+			var fn = registeredTests[data.testId]
+			if (_.isFunction(fn)) fn()
+		}, false)
 	}
 
 	describe('Util', function () {
@@ -79,7 +76,7 @@ void function () {
 	describe('API', function () {
 		before(function () {
 			_initSandbox()
-			_listenSandboxReady()
+			_listenSandboxMessage()
 		})
 		describe('historyState.polyfill()', function () {
 			it('fulfills polyfill - updating `history.state` after push state', function (done) {
