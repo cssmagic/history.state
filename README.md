@@ -43,6 +43,12 @@ iOS 5+ 和 Android 4+ 已经比较稳定地实现了 HTML5 History API（`histor
 
 所有文档入口在 [Wiki 页面](https://github.com/cssmagic/history.state/wiki)，快去看吧！
 
+## 单元测试
+
+0. 把本项目的代码 fork 并 clone 到本地。
+0. 在本项目的根目录运行 `bower install`，安装必要的依赖。
+0. 在浏览器中打开 `test/test.html` 即可运行单元测试。
+
 ## 谁在用？
 
 以下开源项目采用本项目作为基础组件：

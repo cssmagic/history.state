@@ -76,7 +76,7 @@ void function () {
 		})
 	})
 
-	describe('APIs', function () {
+	describe('API', function () {
 		before(function () {
 			_initSandbox()
 			_listenSandboxReady()
