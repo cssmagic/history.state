@@ -32,8 +32,8 @@ void function () {
 	}
 	function _registerSandboxTest(fn) {
 		var testId = _getRandomStr()
-		$iframeSandbox.attr('src', src + '?testId=' + testId)
 		registeredTests[testId] = fn
+		$iframeSandbox.attr('src', src + '?testId=' + testId)
 	}
 
 	// bridge for sandbox
