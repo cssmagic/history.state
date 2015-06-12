@@ -30,7 +30,7 @@ void function () {
 	function _getSandboxWindow() {
 		return $iframeSandbox[0].contentWindow
 	}
-	function _registerSandboxTest(fn) {
+	function _startSandboxTest(fn) {
 		var testId = _getRandomStr()
 		registeredTests[testId] = fn
 		$iframeSandbox.attr('src', src + '?testId=' + testId)
@@ -81,7 +81,7 @@ void function () {
 		describe('historyState.polyfill()', function () {
 			it('fulfills polyfill - updating `history.state` after push state', function (done) {
 				if (!historyState.isSupported() && historyState.__hasHistoryAPI()) {
-					_registerSandboxTest(function () {
+					_startSandboxTest(function () {
 						var sandboxWindow = _getSandboxWindow()
 						sandboxWindow.historyState.polyfill()
 						var key = _getRandomStr()
@@ -99,7 +99,7 @@ void function () {
 			})
 			it('fulfills polyfill - updating `history.state` after replace state', function (done) {
 				if (!historyState.isSupported() && historyState.__hasHistoryAPI()) {
-					_registerSandboxTest(function () {
+					_startSandboxTest(function () {
 						var sandboxWindow = _getSandboxWindow()
 						sandboxWindow.historyState.polyfill()
 						var key = _getRandomStr()
@@ -115,9 +115,9 @@ void function () {
 					done()
 				}
 			})
-			it('fulfills polyfill - updating `history.state` after `popstate` event', function (done) {
+			it('fulfills polyfill - updating `history.state` after history back', function (done) {
 				if (!historyState.isSupported() && historyState.__hasHistoryAPI()) {
-					_registerSandboxTest(function () {
+					_startSandboxTest(function () {
 						var sandboxWindow = _getSandboxWindow()
 						sandboxWindow.historyState.polyfill()
 						var key = _getRandomStr()
@@ -137,11 +137,34 @@ void function () {
 					done()
 				}
 			})
+			it('fulfills polyfill - updating `history.state` after history forward', function (done) {
+				if (!historyState.isSupported() && historyState.__hasHistoryAPI()) {
+					_startSandboxTest(function () {
+						var sandboxWindow = _getSandboxWindow()
+						sandboxWindow.historyState.polyfill()
+						var key = _getRandomStr()
+						var state = {
+							testKey: key
+						}
+						sandboxWindow.history.replaceState(null, '')
+						sandboxWindow.history.pushState(state, '')
+						sandboxWindow.history.back()
+						sandboxWindow.history.forward()
+						setTimeout(function () {
+							var keyInState = sandboxWindow.history.state.testKey || ''
+							expect(keyInState).to.equal(key)
+							done()
+						}, 100)
+					})
+				} else {
+					done()
+				}
+			})
 		})
 		describe('historyState.isSupported()', function () {
 			it('returns false on iOS 5-', function (done) {
 				if (_.ua.isIOS && _.str.toFloat(_.ua.osVersion) < 6) {
-					_registerSandboxTest(function () {
+					_startSandboxTest(function () {
 						var sandboxWindow = _getSandboxWindow()
 						expect(sandboxWindow.historyState.isSupported()).to.be.false
 						done()
@@ -152,7 +175,7 @@ void function () {
 			})
 			it('returns false on Android 4.3-', function (done) {
 				if (_.ua.isAndroid && _.str.toFloat(_.ua.osVersion) < 4.4) {
-					_registerSandboxTest(function () {
+					_startSandboxTest(function () {
 						var sandboxWindow = _getSandboxWindow()
 						expect(sandboxWindow.historyState.isSupported()).to.be.false
 						done()
@@ -163,7 +186,7 @@ void function () {
 			})
 			it('returns true after polyfill on browsers supporting history api', function (done) {
 				if (!historyState.isSupported() && historyState.__hasHistoryAPI()) {
-					_registerSandboxTest(function () {
+					_startSandboxTest(function () {
 						var sandboxWindow = _getSandboxWindow()
 						sandboxWindow.historyState.polyfill()
 						expect(sandboxWindow.historyState.isSupported()).to.be.true
