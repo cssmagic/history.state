@@ -4,7 +4,7 @@
 
 ## 简介
 
-iOS 5+ 和 Android 4+ 已经比较稳定地实现了 HTML5 History API（`history.pushState()` 和 `history.replaceState()` 方法和 `popstate` 事件），但直到 iOS 6+ 和 Android 4.4+ 才支持 `history.state` 属性。
+iOS 5+ 和 Android 4+ 已经比较稳定地实现了 HTML5 History API（`history.pushState()`、`.replaceState()` 方法和 `popstate` 事件），但直到 iOS 6+ 和 Android 4.4+ 才支持 `history.state` 属性。
 
 这个属性还是很重要的，通过它，脚本在任何时候都可以获知当前处于哪个 state，而不是只能在 `popstate` 事件的回调中通过 `event.state` 来获知。
 
