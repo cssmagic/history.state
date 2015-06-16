@@ -173,8 +173,11 @@ void function () {
 					done()
 				}
 			})
-			it('returns false on Android 4.3-', function (done) {
-				if (_.ua.isAndroid && _.str.toFloat(_.ua.osVersion) < 4.4) {
+			it('returns false on Android < 4.4 (WebKit < 537)', function (done) {
+				// android version is not reliable, cuz browser app could include its own core.
+				var ua = _.ua.str
+				var webKitVer = (/\bAppleWebKit[\/: ]?(\d+\.\d+)\b/i.exec(ua) || [0,'0'])[1]
+				if (_.ua.isAndroid && _.str.toFloat(webKitVer) < 537) {
 					_startSandboxTest(function () {
 						var sandboxWindow = _getSandboxWindow()
 						expect(sandboxWindow.historyState.isSupported()).to.be.false
