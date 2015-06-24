@@ -19,13 +19,14 @@ var historyState = function (window) {
 		})
 	}
 	function _inject() {
-		var oldPushState = history.pushState
-		var oldReplaceState = history.replaceState
-		history.pushState = function () {
+		var proto = history.__proto__
+		var oldPushState = proto.pushState
+		var oldReplaceState = proto.replaceState
+		proto.pushState = function () {
 			oldPushState.apply(this, arguments)
 			this.state = arguments[0]
 		}
-		history.replaceState = function () {
+		proto.replaceState = function () {
 			oldReplaceState.apply(this, arguments)
 			this.state = arguments[0]
 		}
