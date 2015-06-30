@@ -1,4 +1,6 @@
 void function () {
+	'use strict'
+
 	// check env
 	if (typeof window === 'undefined') {
 		console.error('[history.state] Open test.html in browsers to run tests!')

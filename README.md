@@ -45,6 +45,12 @@ iOS 5+ 和 Android 4+ 已经比较稳定地实现了 HTML5 History API：
 	<script src="bower_components/history.state/src/history.state.js"></script>
 	```
 
+0. 在执行你自己的脚本之前，别忘了先调用 polyfill 方法：
+
+	```js
+	historyState.polyfill()
+	```
+
 ## API 文档
 
 所有文档入口在 [Wiki 页面](https://github.com/cssmagic/history.state/wiki)，快去看吧！
