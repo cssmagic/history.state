@@ -34,7 +34,7 @@ var historyState = function (window) {
 
 	function _hasHistoryAPI() {
 		return 'onpopstate' in window &&
-			'replaceState' in history && typeof history.replaceState === 'function' &&
+			'pushState' in history && typeof history.pushState === 'function' &&
 			'replaceState' in history && typeof history.replaceState === 'function'
 	}
 	function _hasHistoryState() {
