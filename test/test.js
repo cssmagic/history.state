@@ -42,7 +42,7 @@ void function () {
 	// shouldn't run tests in sandbox scope, so post message to tell host scope to run tests
 	function _listenSandboxMessage() {
 		window.addEventListener('message', function (ev) {
-			var data = JSON.parse(ev.data || '') || {}
+			var data = JSON.parse(ev.data || '{}')
 			var fn = registeredTests[data.testId]
 			if (_.isFunction(fn)) fn()
 		}, false)
