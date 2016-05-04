@@ -2,6 +2,7 @@
 
 > Polyfill `history.state` on iOS 5- and Android 4.3-.
 
+
 ## 简介
 
 iOS 5+ 和 Android 4+ 已经比较稳定地实现了 HTML5 History API：
@@ -15,6 +16,7 @@ iOS 5+ 和 Android 4+ 已经比较稳定地实现了 HTML5 History API：
 这个属性还是很重要的。通过它，脚本在任何时候都可以获知当前处于哪个 state，而不是只能在 `popstate` 事件的回调中通过 `event.state` 来获知。
 
 本项目将在那些支持 `popstate` 事件但不支持 `history.state` 属性的浏览器中模拟原生的 `history.state` 行为。
+
 
 ## 兼容性
 
@@ -31,6 +33,7 @@ iOS 5+ 和 Android 4+ 已经比较稳定地实现了 HTML5 History API：
 
 （更早的移动浏览器对 HTML5 History API 的实现有缺陷，无法保证效果。）
 
+
 ## 安装
 
 0. 通过 Bower 安装：
@@ -45,15 +48,13 @@ iOS 5+ 和 Android 4+ 已经比较稳定地实现了 HTML5 History API：
 	<script src="bower_components/history.state/src/history.state.js"></script>
 	```
 
-0. 在执行你自己的脚本之前，别忘了先调用 polyfill 方法：
+（注：从 2.0 版开始，polyfill 会自动执行，无需手动调用。）
 
-	```js
-	historyState.polyfill()
-	```
 
 ## API 文档
 
 所有文档入口在 [Wiki 页面](https://github.com/cssmagic/history.state/wiki)，快去看吧！
+
 
 ## 单元测试
 
@@ -65,6 +66,7 @@ iOS 5+ 和 Android 4+ 已经比较稳定地实现了 HTML5 History API：
 
 * 在本地建立 Web 服务，以便移动设备通过局域网访问上述单元测试页面。
 * 把本项目的所有文件（及必要的依赖）发布至公网，以便移动设备访问上述单元测试页面。
+
 
 ## 谁在用？
 
