@@ -5,7 +5,7 @@
     "cssmagic <cssmagic.cn@gmail.com>"
   ],
   "description": "Polyfill `history.state` on iOS 5- and Android 4.3-.",
-  "main": "src/history.state.js",
+  "main": "dist/history.state.umd.js",
   "moduleType": [
     "globals"
   ],
@@ -23,7 +23,8 @@
     "node_modules",
     "bower_components",
     "test",
-    "doc"
+    "doc",
+    "src/_wrapper/"
   ],
   "dependencies": {},
   "devDependencies": {

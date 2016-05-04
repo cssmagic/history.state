@@ -1,19 +1,29 @@
 {
   "name": "history.state",
+  "version": "2.0.0-rc.1",
   "homepage": "https://github.com/cssmagic/history.state",
   "author": "cssmagic <cssmagic.cn@gmail.com>",
   "description": "Polyfill `history.state` on iOS 5- and Android 4.3-.",
+  "main": "dist/history.state.umd.js",
+  "keywords": [
+    "html5",
+    "history",
+    "state"
+  ],
   "license": "MIT",
   "scripts": {
     "dist": "gulp",
     "clean": "gulp clean",
+    "js": "gulp js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {},
   "devDependencies": {
     "gulp": "3.*",
-    "del": "^1.1.1",
+    "del": "1.*",
     "gulp-concat": "2.*",
-    "gulp-uglifyjs": "0.*"
+    "gulp-rename": "1.*",
+    "gulp-wrap": "^0.11.0",
+    "gulp-replace": "^0.5.3"
   }
 }
