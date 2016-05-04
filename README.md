@@ -45,7 +45,7 @@ iOS 5+ 和 Android 4+ 已经比较稳定地实现了 HTML5 History API：
 0. 在页面中加载本项目的脚本文件：
 
 	```html
-	<script src="bower_components/history.state/src/history.state.js"></script>
+	<script src="bower_components/history.state/dist/history.state.umd.js"></script>
 	```
 
 （注：从 2.0 版开始，polyfill 会自动执行，无需手动调用。）
